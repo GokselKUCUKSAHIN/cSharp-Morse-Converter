@@ -8,12 +8,11 @@ namespace Morse_Converter
 {
     class Program
     {
+        static string[] Morse = new string[27];
         static void Main(string[] args)
         {
-            string[] Morse = new string[27];
-            
-            Morse[0] = "01s";//A
-            Morse[1] = "0111s";//B
+            Morse[0] = "01s";     //A
+            Morse[1] = "0111s";   //B
             Morse[2] = "1010s";   //C
             Morse[3] = "100s";    //D
             Morse[4] = "0s";      //E
@@ -32,28 +31,60 @@ namespace Morse_Converter
             Morse[17] = "010s";   //R
             Morse[18] = "000s";   //S
             Morse[19] = "1s";     //T
-            Morse[20] = "001s";//U
-            Morse[21] = "0001s";//V
-            Morse[22] = "011s";//W
-            Morse[23] = "1001s";//X
-            Morse[24] = "1011s";//Y
-            Morse[25] = "1100s";//Z
-            Morse[26] = "s";// SPACE
+            Morse[20] = "001s";   //U
+            Morse[21] = "0001s";  //V
+            Morse[22] = "011s";   //W
+            Morse[23] = "1001s";  //X
+            Morse[24] = "1011s";  //Y
+            Morse[25] = "1100s";  //Z
+            Morse[26] = "s";      //SPACE
 
             while (true)
             {
                 var a = Console.ReadKey();
                 int index = (int)a.KeyChar - 65;
-                Console.WriteLine(a.KeyChar + " " + index);
-                if(index == -33)
+                Console.WriteLine(a.KeyChar + " " + index +" : "+ ToMorse(index));
+                if (index == -33)
                 {
                     index = 26;
                 }
                 //Console.WriteLine( " = " + Morse[index]);
-                if((index >= 0) && (index <=26))
+                if ((index >= 0) && (index <= 26))
                 {
                     TuneMorse(Morse[index]);
                 }
+            }
+        }
+        public static string ToMorse(int index)
+        {
+            if (index >= 0 && index <= 26)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (char ch in Morse[index])
+                {
+                    switch(ch)
+                    {
+                        case '0':
+                            {
+                                sb.Append('.');
+                                break;
+                            }
+                        case '1':
+                            {
+                                sb.Append('-');
+                                break;
+                            }
+                        case 's':
+                            {
+                                break;
+                            }
+                    }
+                }
+                return sb.ToString();
+            }
+            else
+            {
+                return String.Empty;
             }
         }
         public static void TuneMorse(string data)
@@ -61,13 +92,13 @@ namespace Morse_Converter
             int hz = 800;
             foreach (char i in data)
             {
-                if(i == '0')
+                if (i == '0')
                 {
                     //dot
-                    Console.Beep(hz,200);
+                    Console.Beep(hz, 200);
                     Thread.Sleep(20);
                 }
-                else if(i == '1')
+                else if (i == '1')
                 {
                     //dash
                     Console.Beep(hz, 800);
